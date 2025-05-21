@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+  <h2>従業員情報更新 - 編集</h2>
+  <p>従業員の姓または名を変更してください。</p>
+  <div id="edit-error" class="error"></div>
+  <form id="editForm" action="employee_confirm.html" method="get">
+    <div>
+      <label>ユーザーID:</label>
+      <div id="display-userId" class="display-field"></div>
+      <input type="hidden" id="hidden-userId" name="userId">
+      <input type="hidden" id="hidden-oldLastName" name="oldLastName">
+      <input type="hidden" id="hidden-oldFirstName" name="oldFirstName">
+    </div>
+    <div>
+      <label for="edit-lastName">姓:</label>
+      <input type="text" id="edit-lastName" name="newLastName">
+    </div>
+    <div>
+      <label for="edit-firstName">名:</label>
+      <input type="text" id="edit-firstName" name="newFirstName">
+    </div>
+    <button type="submit">変更内容を確認</button>
+    <button type="button" class="button-secondary" onclick="window.location.href='usersearch.html'">キャンセル</button>
+  </form>
+</div>
+</body>
+</html>
