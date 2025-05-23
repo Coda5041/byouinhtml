@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理者 - 従業員パスワード変更 - 検索</title>
+</head>
+<body>
+<div class="container">
+  <h2>管理者用 - 従業員パスワード変更</h2>
+  <p>パスワードを変更する従業員のユーザーIDを入力してください。</p>
+  <form onsubmit="return handleSearch();">
+    <div>
+      <label for="search-userId">ユーザーID:</label>
+      <input type="text" id="search-userId" name="searchUserId">
+    </div>
+    <button type="submit">検索</button>
+  </form>
+  <p style="margin-top: 20px;"><a href="admin_dashboard.html">管理者ダッシュボードに戻る</a></p> <!-- 仮の管理者メニューへ -->
+</div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>仕入れ先情報変更 - 電話番号</title>
+</head>
+<body>
+<div class="container">
+  <h1>仕入れ先情報変更 - 電話番号</h1>
+
+  <form id="editPhoneForm" action="supplier_confirm_phone_change.html" method="get" onsubmit="return validateAndProceed();">
+    <input type="hidden" id="supplierIdHidden" name="id">
+    <input type="hidden" id="currentPhoneHidden" name="currentPhone">
+
+    <div class="info-group">
+      <label>仕入れ先ID:</label>
+      <div id="supplierId" class="value"></div>
+    </div>
+    <div class="info-group">
+      <label>仕入れ先名:</label>
+      <div id="supplierName" class="value"></div>
+    </div>
+    <div class="info-group">
+      <label>住所:</label>
+      <div id="supplierAddress" class="value"></div>
+    </div>
+    <div class="info-group">
+      <label>資本金:</label>
+      <div id="supplierCapital" class="value"></div>
+    </div>
+    <div class="info-group">
+      <label>主要納期:</label>
+      <div id="supplierDeliveryTime" class="value"></div>
+    </div>
+
+    <div class="info-group">
+      <label for="phoneInput">電話番号 (変更可):</label>
+      <input type="tel" id="phoneInput" name="newPhone" placeholder="例: 03-1111-2222">
+      <div id="phoneError" class="error-message"></div>
+    </div>
+
+    <div class="buttons">
+      <button type="submit" class="confirm-btn">変更内容を確認</button>
+      <button type="button" class="cancel-btn" onclick="window.location.href='supplier_list.html?id=' + (currentSupplierId || '')">キャンセル</button>
+      <!-- キャンセル時は一覧に戻るか、詳細に戻るかなど仕様による -->
+    </div>
+  </form>
+  <p style="margin-top: 30px;"><a href="admin_dashboard.html">« 管理者ダッシュボードに戻る</a></p>
+</div>
+</body>
+</html>

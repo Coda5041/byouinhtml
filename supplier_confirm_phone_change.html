@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>電話番号変更確認</title>
+</head>
+<body>
+<div class="container">
+    <h1>電話番号変更 確認</h1>
+    <p>以下の内容で仕入れ先の電話番号を変更します。よろしいですか？</p>
+
+    <div class="confirmation-details">
+        <p><strong>仕入れ先ID:</strong> <span id="supplierIdDisplay"></span></p>
+        <p><strong>現在の電話番号:</strong> <span id="currentPhoneDisplay" class="old-value"></span></p>
+        <p><strong>新しい電話番号:</strong> <span id="newPhoneDisplay" class="new-value"></span></p>
+    </div>
+
+    <form id="confirmChangeForm" action="supplier_change_success.html" method="get">
+        <!-- 実際に変更処理を行う際にサーバーに送る情報 -->
+        <input type="hidden" id="idHiddenConfirm" name="id">
+        <input type="hidden" id="newPhoneHiddenConfirm" name="newPhone">
+        <!-- 変更種別を渡す例 -->
+        <input type="hidden" name="changeType" value="phone">
+
+        <div class="buttons">
+            <button type="submit" class="submit-btn">この内容で変更する</button>
+            <button type="button" class="back-btn" onclick="goBackToEdit()">修正する</button>
+        </div>
+    </form>
+    <p style="margin-top: 30px;"><a href="admin_dashboard.html">« 管理者ダッシュボードに戻る</a></p>
+</div>
+</body>
+</html>

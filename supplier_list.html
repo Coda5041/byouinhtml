@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>仕入れ先一覧</title>
+</head>
+<body>
+<div class="container">
+  <h1>仕入れ先一覧</h1>
+
+  <div class="controls">
+    <div class="search-area">
+      <input type="text" id="searchInput" placeholder="仕入れ先名、住所などで検索...">
+      <button onclick="searchSuppliers()">検索</button>
+    </div>
+    <div class="add-button">
+      <button onclick="window.location.href='supplier_add.html'">新規仕入れ先登録</button>
+      <!-- supplier_add.html は別途作成想定 -->
+    </div>
+  </div>
+
+  <table>
+    <thead>
+    <tr>
+      <th onclick="sortTable(0)">仕入れ先ID ▼</th>
+      <th onclick="sortTable(1)">仕入れ先名 ▼</th>
+      <th onclick="sortTable(2)">住所 ▼</th>
+      <th onclick="sortTable(3)">電話番号</th>
+      <th onclick="sortTable(4)">資本金</th>
+      <th onclick="sortTable(5)">主要納期</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody id="supplierTableBody">
+    <!-- ダミーデータ。実際はJavaScriptで動的に生成またはサーバーから取得 -->
+    <tr>
+      <td>S001</td>
+      <td>株式会社メディカルサプライ</td>
+      <td>東京都中央区日本橋1-2-3</td>
+      <td>03-1234-5678</td>
+      <td>5,000万円</td>
+      <td>3日</td>
+      <td class="actions">
+        <a href="supplier_detail.html?id=S001">詳細</a>
+        <a href="supplier_edit.html?id=S001">編集</a>
+      </td>
+    </tr>
+    <tr>
+      <td>S002</td>
+      <td>ABC薬品株式会社</td>
+      <td>大阪府大阪市北区梅田4-5-6</td>
+      <td>06-9876-5432</td>
+      <td>1億円</td>
+      <td>5日</td>
+      <td class="actions">
+        <a href="supplier_detail.html?id=S002">詳細</a>
+        <a href="supplier_edit.html?id=S002">編集</a>
+      </td>
+    </tr>
+    <tr>
+      <td>S003</td>
+      <td>ヘルスケア物流サービス</td>
+      <td>愛知県名古屋市中区栄7-8-9</td>
+      <td>052-1122-3344</td>
+      <td>3,000万円</td>
+      <td>2日</td>
+      <td class="actions">
+        <a href="supplier_detail.html?id=S003">詳細</a>
+        <a href="supplier_edit.html?id=S003">編集</a>
+      </td>
+    </tr>
+    <tr>
+      <td>S004</td>
+      <td>九州製薬株式会社</td>
+      <td>福岡県福岡市博多区中洲10-1-1</td>
+      <td>092-5566-7788</td>
+      <td>8,000万円</td>
+      <td>4日</td>
+      <td class="actions">
+        <a href="supplier_detail.html?id=S004">詳細</a>
+        <a href="supplier_edit.html?id=S004">編集</a>
+      </td>
+    </tr>
+    <tr>
+      <td>S005</td>
+      <td>ファーマーズサポート合同会社</td>
+      <td>北海道札幌市中央区大通西1-2-3</td>
+      <td>011-9988-7766</td>
+      <td>1,000万円</td>
+      <td>7日</td>
+      <td class="actions">
+        <a href="supplier_detail.html?id=S005">詳細</a>
+        <a href="supplier_edit.html?id=S005">編集</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <a href="#" class="disabled">« 前へ</a>
+    <a href="#" class="current">1</a>
+    <a href="#">2</a>
+    <a href="#">3</a>
+    <a href="#">次へ »</a>
+  </div>
+
+  <p style="margin-top: 30px;"><a href="admin_dashboard.html">« 管理者ダッシュボードに戻る</a></p> <!-- 仮の管理者メニューへ -->
+
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>従業員情報変更確認</title>
+</head>
+<body>
+<div class="container">
+  <h2>従業員情報更新 - 確認</h2>
+  <p>以下の内容で情報を更新します。よろしいですか？</p>
+  <div>
+    <p><strong>ユーザーID:</strong> <span id="userId"></span></p>
+    <p><strong>姓:</strong> <span id="oldLastName" class="old-value"></span> → <span id="newLastName" class="new-value"></span></p>
+    <p><strong>名:</strong> <span id="oldFirstName" class="old-value"></span> → <span id="newFirstName" class="new-value"></span></p>
+  </div>
+  <form action="employee_success.html" method="get">
+    <!-- 確認画面から完了画面へ渡すデータ（必要であれば） -->
+    <input type="hidden" name="userId" value=""> <!-- JSでセット -->
+    <button type="submit">この内容で変更する</button>
+  </form>
+  <button type="button" class="button-secondary" onclick="goBackToEdit()">修正する</button>
+</div>
+<script>
+  // 完了画面に渡す用のhiddenフィールドに値を設定
+  const urlParams = new URLSearchParams(window.location.search);
+  document.querySelector('input[name="userId"]').value = urlParams.get('userId');
+</script>
+</body>
+</html>

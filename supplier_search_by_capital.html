@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>仕入れ先検索（資本金）</title>
+</head>
+<body>
+<div class="container">
+  <h1>仕入れ先検索 - 資本金</h1>
+
+  <div class="search-form">
+    <form id="capitalSearchForm" onsubmit="return searchByCapital();">
+      <label for="capitalInput">検索する資本金額 (以上):</label>
+      <input type="number" id="capitalInput" name="capital" min="0" placeholder="例: 10000000" required>
+      <span>円</span>
+      <button type="submit">検索</button>
+    </form>
+  </div>
+
+  <div id="resultsArea" class="results-area hidden">
+    <h2>検索結果</h2>
+    <table id="resultsTable">
+      <thead>
+      <tr>
+        <th>仕入れ先ID</th>
+        <th>仕入れ先名</th>
+        <th>資本金 (円)</th>
+        <th>住所</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody id="resultsTableBody">
+      <!-- 検索結果がここに表示されます -->
+      </tbody>
+    </table>
+    <p id="noResultsMessage" class="no-results hidden">
+      指定された資本金以上の仕入れ先は見つかりませんでした。
+    </p>
+  </div>
+  <p style="margin-top: 30px;"><a href="admin_dashboard.html">« 管理者ダッシュボードに戻る</a></p> <!-- 仮の管理者メニューへ -->
+</div>
+</body>
+</html>
