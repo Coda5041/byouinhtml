@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>患者保険証変更 - 内容確認</title>
+</head>
+<body>
+<div class="container">
+  <h1>患者保険証情報変更 - 内容確認</h1>
+  <div class="patient-info-confirm">
+    <p><strong>患者ID:</strong> <span id="confirmPatientId"></span></p>
+    <p><strong>氏名:</strong> <span id="confirmPatientName"></span></p>
+  </div>
+  <p>以下の内容で患者の保険証情報を変更します。よろしいですか？</p>
+
+  <div class="confirmation-details">
+    <p><strong>保険証記号番号 (変更前):</strong> <span id="confirmOriginalInsuranceId" class="old-value"></span></p>
+    <p><strong>保険証記号番号 (変更後):</strong> <span id="confirmNewInsuranceId" class="new-value"></span></p>
+    <hr style="border:0; border-top:1px dotted #eee; margin: 10px 0;">
+    <p><strong>有効期限 (変更前):</strong> <span id="confirmOriginalExpiryDate" class="old-value"></span></p>
+    <p><strong>有効期限 (変更後):</strong> <span id="confirmNewExpiryDate" class="new-value"></span></p>
+  </div>
+
+  <form id="confirmChangeForm" action="patient_change_success.html" method="get">
+    <input type="hidden" id="hiddenConfirmPatientId" name="patientId">
+    <input type="hidden" id="hiddenConfirmNewInsuranceId" name="newInsuranceId">
+    <input type="hidden" id="hiddenConfirmNewExpiryDate" name="newExpiryDate">
+    <input type="hidden" name="changeType" value="insurance"> <!-- 変更種別 -->
+    <div class="buttons">
+      <button type="button" class="back-btn" onclick="goBackToEdit()">修正する</button>
+      <button type="submit" class="submit-btn">この内容で変更する</button>
+    </div>
+  </form>
+  <p style="margin-top: 30px;"><a href="home.html">« メインメニューに戻る</a></p>
+</div>
+</body>
+</html>

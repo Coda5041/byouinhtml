@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>医療機関向け 医師・受付・患者管理システム - 画面イメージ</h1>
+
+<!-- 機能ID: D104 処置履歴確認機能 -->
+<div class="container">
+  <h2>処置履歴確認 (機能ID: D104)</h2>
+  <p>アクター: 医師</p>
+
+  <div class="form-group">
+    <label for="search-patient-id">患者ID:</label>
+    <input type="text" id="search-patient-id" name="patientId" placeholder="患者IDを入力してください" style="width: 250px;">
+    <button type="button" onclick="displayTreatmentHistory()">履歴表示</button>
+  </div>
+
+  <div id="patient-info-area" class="patient-info" style="display: none;">
+    <p><strong>患者ID:</strong> <span id="display-patient-id"></span></p>
+    <p><strong>患者氏名:</strong> <span id="display-patient-name"></span></p>
+    <!-- 必要に応じて生年月日などの情報も表示 -->
+  </div>
+
+  <div id="treatment-history-table" style="display: none;">
+    <h3>処置履歴</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>処置日</th>
+        <th>処置内容 (薬剤名)</th>
+        <th>数量</th>
+        <th>単位</th>
+        <th>担当医師</th>
+        <!-- 他に必要な項目があれば追加 (例: 備考、処置コードなど) -->
+      </tr>
+      </thead>
+      <tbody id="history-table-body">
+      <!-- JavaScriptで履歴データを挿入する想定 -->
+      <tr>
+        <td>2023年10月26日</td>
+        <td>薬剤A</td>
+        <td>2</td>
+        <td>錠</td>
+        <td>山田 太郎 医師</td>
+      </tr>
+      <tr>
+        <td>2023年09月15日</td>
+        <td>薬剤B 点滴</td>
+        <td>100</td>
+        <td>mL</td>
+        <td>佐藤 花子 医師</td>
+      </tr>
+      <tr>
+        <td>2023年09月15日</td>
+        <td>検査X</td>
+        <td>1</td>
+        <td>回</td>
+        <td>佐藤 花子 医師</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="no-history-message" class="info-message" style="display: none;">
+    指定された患者の処置履歴はありません。
+  </div>
+
+  <div style="margin-top: 20px;">
+    <button type="button" class="button-secondary" onclick="window.location.href='menu.html'">メニューに戻る</button>
+    <button type="button" onclick="resetPatientIdSearch()">別の患者IDを指定する</button>
+  </div>
+</div>
+
+<script>
+  function displayTreatmentHistory() {
+    const patientIdInput = document.getElementById('search-patient-id');
+    const patientId = patientIdInput.value.trim();
+
+    const patientInfoArea = document.getElementById('patient-info-area');
+    const displayPatientId = document.getElementById('display-patient-id');
+    const displayPatientName = document.getElementById('display-patient-name'); // 仮
+    const historyTable = document.getElementById('treatment-history-table');
+    const noHistoryMessage = document.getElementById('no-history-message');
+    const historyTableBody = document.getElementById('history-table-body');
+
+    // 一旦クリア
+    patientInfoArea.style.display = 'none';
+    historyTable.style.display = 'none';
+    noHistoryMessage.style.display = 'none';
+    historyTableBody.innerHTML = ''; // 既存の履歴をクリア
+
+    if (patientId === "") {
+      alert("患者IDを入力してください。");
+      return;
+    }
+
+    // --- ここから下はサーバーとの通信をシミュレート ---
+    // 実際にはここでサーバーに患者IDを送信し、患者情報と処置履歴を取得します。
+    // 以下はダミーデータでの表示デモです。
+
+    if (patientId === "P0001") { // 履歴がある患者の例
+      displayPatientId.textContent = "P0001";
+      displayPatientName.textContent = "田中 太郎"; // 仮の患者名
+      patientInfoArea.style.display = 'block';
+
+      // ダミーの履歴データ
+      const dummyHistory = [
+        { date: "2024年05月10日", treatment: "風邪薬A", quantity: "2", unit: "錠", doctor: "鈴木 一郎" },
+        { date: "2024年04月20日", treatment: "定期検診", quantity: "1", unit: "回", doctor: "佐藤 次郎" },
+        { date: "2024年03月01日", treatment: "解熱剤B", quantity: "1", unit: "包", doctor: "鈴木 一郎" }
+      ];
+
+      dummyHistory.forEach(item => {
+        const row = historyTableBody.insertRow();
+        row.insertCell().textContent = item.date;
+        row.insertCell().textContent = item.treatment;
+        row.insertCell().textContent = item.quantity;
+        row.insertCell().textContent = item.unit;
+        row.insertCell().textContent = item.doctor;
+      });
+      historyTable.style.display = 'block';
+
+    } else if (patientId === "P0002") { // 履歴がない患者の例
+      displayPatientId.textContent = "P0002";
+      displayPatientName.textContent = "山田 花子"; // 仮の患者名
+      patientInfoArea.style.display = 'block';
+      noHistoryMessage.style.display = 'block';
+    } else { // 該当患者が見つからない場合 (ここでは簡略化)
+      alert("指定された患者IDは見つかりませんでした。");
+      patientIdInput.focus();
+    }
+    // --- サーバー通信シミュレーションここまで ---
+  }
+
+  function resetPatientIdSearch() {
+    document.getElementById('search-patient-id').value = '';
+    document.getElementById('patient-info-area').style.display = 'none';
+    document.getElementById('treatment-history-table').style.display = 'none';
+    document.getElementById('no-history-message').style.display = 'none';
+    document.getElementById('search-patient-id').focus();
+  }
+
+  // 初期表示で患者情報と履歴は非表示
+  document.addEventListener('DOMContentLoaded', () => {
+    resetPatientIdSearch();
+  });
+</script>
+</body>
+</html>

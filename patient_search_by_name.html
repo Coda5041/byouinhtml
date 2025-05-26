@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>患者検索（氏名）</title>
+</head>
+<body>
+<div class="container">
+  <div class="user-role-display">
+    ログインロール: <span id="currentUserRole">受付</span> <!-- JSで変更可能 -->
+  </div>
+  <h1>患者検索 - 氏名</h1>
+
+  <div class="search-form">
+    <form id="nameSearchForm" onsubmit="return searchByName();" style="display: contents;">
+      <label for="nameInput">患者氏名 (部分一致可):</label>
+      <input type="text" id="nameInput" name="patientName" placeholder="例: 山田 太郎、やまだ、タロウ">
+      <button type="submit">検索</button>
+    </form>
+  </div>
+
+  <div id="resultsArea" class="results-area hidden">
+    <h2>検索結果</h2>
+    <table id="resultsTable">
+      <thead>
+      <tr>
+        <th>患者ID</th>
+        <th>氏名 (姓)</th>
+        <th>氏名 (名)</th>
+        <th>カナ (姓)</th>
+        <th>カナ (名)</th>
+        <th>生年月日</th>
+        <th>性別</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody id="resultsTableBody">
+      <!-- 検索結果がここに表示されます -->
+      </tbody>
+    </table>
+    <p id="noResultsMessage" class="no-results hidden">
+      該当する患者は見つかりませんでした。
+    </p>
+  </div>
+  <p style="margin-top: 30px;"><a href="main_menu.html">« メインメニューに戻る</a></p> <!-- 仮のメニューへ -->
+</div>
+
+<script>
+  // ダミーの患者データ (実際はサーバーから取得)
+  const allPatients = [
+    { id: "P00101", lastName: "山田", firstName: "太郎", lastNameKana: "ヤマダ", firstNameKana: "タロウ", birthDate: "1980-04-15", gender: "男性" },
+    { id: "P00205", lastName: "佐藤", firstName: "花子", lastNameKana: "サトウ", firstNameKana: "ハナコ", birthDate: "1992-11-20", gender: "女性" },
+    { id: "P00315", lastName: "鈴木", firstName: "一郎", lastNameKana: "スズキ", firstNameKana: "イチロウ", birthDate: "1975-07-01", gender: "男性" },
+    { id: "P00400", lastName: "高橋", firstName: "陽子", lastNameKana: "タカハシ", firstNameKana: "ヨウコ", birthDate: "2001-02-28", gender: "女性" },
+    { id: "P00102", lastName: "山田", firstName: "次郎", lastNameKana: "ヤマダ", firstNameKana: "ジロウ", birthDate: "1985-09-10", gender: "男性" },
+    { id: "P00520", lastName: "田中", firstName: "太郎", lastNameKana: "タナカ", firstNameKana: "タロウ", birthDate: "1990-01-25", gender: "男性" }
+  ];
+
+  // 現在のロールに応じて表示を切り替える（デモ用）
+  const currentUserRole = "医師"; // "受付" または "医師" に変更してテスト
+  document.getElementById('currentUserRole').textContent = currentUserRole;
+
+
+  function searchByName() {
+    const nameInput = document.getElementById('nameInput');
+    const searchTerm = nameInput.value.trim().toUpperCase(); // 大文字小文字区別しない、空白除去
+
+    if (searchTerm === "") {
+      alert("検索する患者名を入力してください。");
+      return false;
+    }
+
+    const resultsArea = document.getElementById('resultsArea');
+    const tableBody = document.getElementById('resultsTableBody');
+    const noResultsMessage = document.getElementById('noResultsMessage');
+
+    tableBody.innerHTML = '';
+    noResultsMessage.classList.add('hidden');
+    resultsArea.classList.remove('hidden');
+
+    const filteredPatients = allPatients.filter(patient => {
+      const fullName = `${patient.lastName}${patient.firstName}`;
+      const fullNameKana = `${patient.lastNameKana}${patient.firstNameKana}`;
+      return fullName.toUpperCase().includes(searchTerm) ||
+              fullNameKana.toUpperCase().includes(searchTerm) ||
+              patient.lastName.toUpperCase().includes(searchTerm) ||
+              patient.firstName.toUpperCase().includes(searchTerm) ||
+              patient.lastNameKana.toUpperCase().includes(searchTerm) ||
+              patient.firstNameKana.toUpperCase().includes(searchTerm);
+    });
+
+    if (filteredPatients.length > 0) {
+      document.getElementById('resultsTable').classList.remove('hidden');
+      filteredPatients.forEach(patient => {
+        const row = tableBody.insertRow();
+        row.insertCell().textContent = patient.id;
+        row.insertCell().textContent = patient.lastName;
+        row.insertCell().textContent = patient.firstName;
+        row.insertCell().textContent = patient.lastNameKana;
+        row.insertCell().textContent = patient.firstNameKana;
+        row.insertCell().textContent = patient.birthDate;
+        row.insertCell().textContent = patient.gender;
+
+        const actionsCell = row.insertCell();
+        actionsCell.classList.add('actions');
+        let actionsHtml = `<a href="patient_detail.html?id=${patient.id}">詳細</a>`;
+        if (currentUserRole === "医師") {
+          // 設計書の備考「医師ロールではここでの結果から薬剤・処置機能にあるものを呼び出す」を反映
+          actionsHtml += `<button onclick="goToMedication('${patient.id}', '${patient.lastName} ${patient.firstName}')">薬剤/処置</button>`;
+        }
+        actionsCell.innerHTML = actionsHtml;
+      });
+    } else {
+      document.getElementById('resultsTable').classList.add('hidden');
+      noResultsMessage.classList.remove('hidden');
+    }
+    return false;
+  }
+
+  function goToMedication(patientId, patientName) {
+    // 薬剤・処置画面 (D101: 薬投与指示機能など) へ遷移する処理
+    // 実際には、患者IDと氏名をパラメータとして渡す
+    alert(`患者ID: ${patientId} (${patientName}) の薬剤/処置画面へ遷移します。(ダミー)`);
+    // window.location.href = `medication_screen.html?patientId=${patientId}&patientName=${encodeURIComponent(patientName)}`;
+  }
+
+</script>
+</body>
+</html>

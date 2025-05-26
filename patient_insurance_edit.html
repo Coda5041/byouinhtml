@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>患者保険証変更 - 入力</title>
+</head>
+<body>
+<div class="container">
+    <h1>患者保険証情報変更</h1>
+
+    <div class="patient-info">
+        <p><strong>患者ID:</strong> <span id="patientIdDisplay"></span></p>
+        <p><strong>氏名:</strong> <span id="patientNameDisplay"></span></p>
+    </div>
+
+    <div id="errorSummary" class="error-summary" style="display: none;"></div>
+
+    <form id="editInsuranceForm" action="patient_insurance_confirm.html" method="get" onsubmit="return validateAndProceed();">
+        <input type="hidden" id="hiddenPatientId" name="patientId">
+        <input type="hidden" id="hiddenPatientName" name="patientName">
+        <input type="hidden" id="hiddenOriginalInsuranceId" name="originalInsuranceId">
+        <input type="hidden" id="hiddenOriginalExpiryDate" name="originalExpiryDate">
+
+        <div class="form-group">
+            <label for="insuranceIdInput">保険証記号番号 <span class="note">(変更する場合に入力)</span></label>
+            <input type="text" id="insuranceIdInput" name="newInsuranceId" placeholder="例: あい1234">
+        </div>
+        <div class="form-group">
+            <label for="expiryDateInput">有効期限 <span class="note">(変更する場合、または記号番号変更時に入力)</span></label>
+            <input type="date" id="expiryDateInput" name="newExpiryDate">
+        </div>
+
+        <div class="buttons">
+            <button type="button" class="cancel-btn" onclick="window.location.href='patient_detail.html?id=' + currentPatientId">キャンセル</button> <!-- 詳細画面に戻る例 -->
+            <button type="submit" class="confirm-btn">変更内容を確認</button>
+        </div>
+    </form>
+    <p style="margin-top: 30px;"><a href="home.html">« メインメニューに戻る</a></p>
+</div>
+</body>
+</html>

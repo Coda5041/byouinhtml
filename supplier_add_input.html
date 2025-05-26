@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新規仕入れ先登録 - 入力</title>
+</head>
+<body>
+<div class="container">
+  <h1>新規仕入れ先登録</h1>
+
+  <div id="errorSummary" class="error-summary" style="display: none;"></div>
+
+  <form id="addSupplierForm" action="supplier_add_confirm.html" method="get" onsubmit="return validateAndProceed();">
+    <div class="form-group">
+      <label for="supplierId">仕入れ先ID<span class="required">*</span></label>
+      <input type="text" id="supplierId" name="supplierId" placeholder="例: S0001">
+    </div>
+    <div class="form-group">
+      <label for="supplierName">仕入れ先名<span class="required">*</span></label>
+      <input type="text" id="supplierName" name="supplierName" placeholder="例: 株式会社〇〇サプライ">
+    </div>
+    <div class="form-group">
+      <label for="supplierAddress">仕入れ先住所<span class="required">*</span></label>
+      <input type="text" id="supplierAddress" name="supplierAddress" placeholder="例: 東京都千代田区...">
+    </div>
+    <div class="form-group">
+      <label for="supplierPhone">仕入れ先電話番号<span class="required">*</span></label>
+      <input type="tel" id="supplierPhone" name="supplierPhone" placeholder="例: 03-1234-5678">
+    </div>
+    <div class="form-group">
+      <label for="supplierCapital">資本金<span class="required">*</span></label>
+      <input type="number" id="supplierCapital" name="supplierCapital" placeholder="例: 10000000" min="0">
+      <span class="input-unit">円</span>
+    </div>
+    <div class="form-group">
+      <label for="supplierDeliveryTime">主要納期<span class="required">*</span></label>
+      <input type="number" id="supplierDeliveryTime" name="supplierDeliveryTime" placeholder="例: 3" min="1">
+      <span class="input-unit">日</span>
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="cancel-btn" onclick="window.location.href='supplier_list.html'">キャンセル</button>
+      <button type="submit" class="confirm-btn">登録内容を確認</button>
+    </div>
+  </form>
+  <p style="margin-top: 30px;"><a href="home.html">« 管理者ダッシュボードに戻る</a></p>
+</div>
+</body>
+</html>

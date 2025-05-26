@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>保険証期限切れ患者一覧</title>
+</head>
+<body>
+<div class="container">
+    <h1>保険証期限切れ患者一覧</h1>
+
+    <div class="info-header">
+        <p>本日 (<span id="currentDateDisplay"></span>) 時点で、保険証の有効期限が切れている、または本日で切れる患者の一覧です。</p>
+        <p>速やかに患者様にご確認・更新手続きのご案内をお願いします。</p>
+    </div>
+
+    <table id="expiredListTable">
+        <thead>
+        <tr>
+            <th>患者ID</th>
+            <th>氏名</th>
+            <th>保険証記号番号</th>
+            <th>有効期限</th>
+            <th>経過日数</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="expiredListTableBody">
+        <!-- 期限切れ患者の情報がここに表示されます -->
+        </tbody>
+    </table>
+
+    <p id="noExpiredMessage" class="no-results hidden">
+        現在、保険証の有効期限が切れている患者はいません。
+    </p>
+
+    <p style="margin-top: 30px;"><a href="home.html">« メインメニューに戻る</a></p> <!-- 仮のメニューへ -->
+</div>
+
+<script>
+    // ダミーの患者データ (実際はサーバーから取得)
+    const allPatientsWithInsurance = [
+        { patientId: "P00101", lastName: "山田", firstName: "太郎", insuranceId: "AB123456", expiryDate: "2023-12-31" }, // 期限切れ
+        { patientId: "P00205", lastName: "佐藤", firstName: "花子", insuranceId: "CD789012", expiryDate: new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().split('T')[0] }, // 昨日期限切れ
+        { patientId: "P00315", lastName: "鈴木", firstName: "一郎", insuranceId: "EF345678", expiryDate: new Date().toISOString().split('T')[0] }, // 本日期限切れ
+        { patientId: "P00400", lastName: "高橋", firstName: "陽子", insuranceId: "GH567890", expiryDate: new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().split('T')[0] }, // 期限内
+        { patientId: "P00102", lastName: "山田", firstName: "次郎", insuranceId: "IJ789012", expiryDate: "2024-01-15" }, // 期限切れ
+        { patientId: "P00520", lastName: "田中", firstName: "アイコ", insuranceId: "KL901234", expiryDate: "" }, // 有効期限なし
+        { patientId: "P00600", lastName: "伊藤", firstName: "三郎", insuranceId: "MN012345", expiryDate: null }, // 有効期限なし
+        { patientId: "P00700", lastName: "渡辺", firstName: "直美", insuranceId: "OP123456", expiryDate: new Date(new Date().setDate(new Date().getDate() + 5)).toISOString().split('T')[0] }, // 期限内
+    ];
+
+    window.onload = function() {
+        const today = new Date();
+        // today.setHours(0, 0, 0, 0); // 時刻部分をリセットして日付のみで比較
+
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); // 月は0から始まるため+1
+        const dd = String(today.getDate()).padStart(2, '0');
+        const todayString = `${yyyy}-${mm}-${dd}`;
+        document.getElementById('currentDateDisplay').textContent = `${yyyy}年${mm}月${dd}日`;
+
+        const tableBody = document.getElementById('expiredListTableBody');
+        const noExpiredMessage = document.getElementById('noExpiredMessage');
+        let expiredCount = 0;
+
+        allPatientsWithInsurance.forEach(patient => {
+            if (patient.expiryDate) {
+                const expiry = new Date(patient.expiryDate);
+                // expiry.setHours(0,0,0,0); // 比較のため時刻をリセット (日付のみで比較)
+                // 有効期限が「今日以前」であれば期限切れとみなす
+                if (expiry < today || expiry.toISOString().split('T')[0] === todayString) {
+                    expiredCount++;
+                    const row = tableBody.insertRow();
+                    row.insertCell().textContent = patient.patientId;
+                    row.insertCell().textContent = `${patient.lastName} ${patient.firstName}`;
+                    row.insertCell().textContent = patient.insuranceId || "(情報なし)";
+
+                    const expiryCell = row.insertCell();
+                    expiryCell.textContent = patient.expiryDate;
+                    expiryCell.classList.add('expired-date');
+
+                    // 経過日数の計算
+                    const diffTime = today - expiry;
+                    let daysPassed = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    if(daysPassed <=0 && expiry.toISOString().split('T')[0] === todayString) { //本日切れ
+                        daysPassed = 0;
+                    } else if (daysPassed <=0 && expiry < today) { // 日付の時刻部分による誤差調整
+                        daysPassed = 1;
+                    }
+
+
+                    row.insertCell().textContent = daysPassed > 0 ? `${daysPassed} 日経過` : (daysPassed === 0 ? "本日まで" : "－");
+
+
+                    const actionsCell = row.insertCell();
+                    actionsCell.classList.add('actions');
+                    actionsCell.innerHTML = `<a href="patient_detail.html?id=${patient.patientId}">詳細</a> <a href="patient_insurance_edit.html?patientId=${patient.patientId}">保険証変更</a>`;
+                }
+            }
+        });
+
+        if (expiredCount === 0) {
+            document.getElementById('expiredListTable').classList.add('hidden');
+            noExpiredMessage.classList.remove('hidden');
+        } else {
+            document.getElementById('expiredListTable').classList.remove('hidden');
+            noExpiredMessage.classList.add('hidden');
+        }
+    };
+</script>
+</body>
+</html>

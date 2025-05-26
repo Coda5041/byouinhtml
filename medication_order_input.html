@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>薬剤投与指示 - 入力</title>
+</head>
+<body>
+<div class="container">
+  <h1>薬剤投与指示</h1>
+
+  <div class="patient-info">
+    <p><strong>患者ID:</strong> <span id="patientIdDisplay"></span></p>
+    <p><strong>氏名:</strong> <span id="patientNameDisplay"></span></p>
+  </div>
+
+  <div class="order-form-section">
+    <h2>薬剤の選択と投与量入力</h2>
+    <div class="form-group">
+      <label for="drugSelect">薬剤名:</label>
+      <select id="drugSelect">
+        <option value="">-- 薬剤を選択 --</option>
+        <!-- JavaScriptで薬剤リストをロード -->
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="quantityInput">数量:</label>
+      <input type="number" id="quantityInput" min="1" value="1">
+      <span id="unitDisplay" class="unit-label"></span> <!-- 単位表示用 -->
+    </div>
+    <button type="button" class="add-drug-btn" onclick="addDrugToOrder()">指示に追加</button>
+    <div id="addDrugError" class="error-message"></div>
+  </div>
+
+  <div class="current-orders-section">
+    <h2>現在の投与指示 (未確定)</h2>
+    <table id="currentOrdersTable">
+      <thead>
+      <tr>
+        <th>薬剤名</th>
+        <th>数量</th>
+        <th>単位</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody id="currentOrdersTableBody">
+      <!-- 追加された薬剤がここに表示されます -->
+      </tbody>
+    </table>
+    <p id="noOrdersMessage" style="text-align:center; color:#6c757d; padding:10px;">まだ指示はありません。</p>
+  </div>
+
+  <div class="main-buttons">
+    <button type="button" class="cancel-btn" onclick="cancelOrder()">指示を破棄して戻る</button>
+    <button type="button" class="confirm-order-btn" onclick="goToConfirmation()">指示内容を確認する</button>
+  </div>
+  <p style="margin-top: 30px;"><a href="doctor_dashboard.html">« 医師ダッシュボードに戻る</a></p>
+</div>
+</body>
+</html>

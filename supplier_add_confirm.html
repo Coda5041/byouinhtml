@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新規仕入れ先登録 - 確認</title>
+</head>
+<body>
+<div class="container">
+  <h1>新規仕入れ先登録 - 内容確認</h1>
+  <p>以下の内容で新しい仕入れ先を登録します。よろしいですか？</p>
+
+  <div class="confirmation-details">
+    <p><strong>仕入れ先ID:</strong> <span id="confirm-supplierId"></span></p>
+    <p><strong>仕入れ先名:</strong> <span id="confirm-supplierName"></span></p>
+    <p><strong>仕入れ先住所:</strong> <span id="confirm-supplierAddress"></span></p>
+    <p><strong>仕入れ先電話番号:</strong> <span id="confirm-supplierPhone"></span></p>
+    <p><strong>資本金:</strong> <span id="confirm-supplierCapital"></span></p>
+    <p><strong>主要納期:</strong> <span id="confirm-supplierDeliveryTime"></span></p>
+  </div>
+
+  <form id="confirmAddForm" action="supplier_add_success.html" method="get">
+    <!-- JavaScriptによってhidden inputがここに追加されます -->
+    <div class="buttons">
+      <button type="button" class="back-btn" onclick="goBackToInput()">修正する</button>
+      <button type="submit" class="submit-btn">この内容で登録する</button>
+    </div>
+  </form>
+  <p style="margin-top: 30px;"><a href="home.html">« 管理者ダッシュボードに戻る</a></p>
+</div>
+</body>
+</html>

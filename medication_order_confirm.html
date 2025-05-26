@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>薬剤投与指示 - 確認</title>
+</head>
+<body>
+<div class="container">
+  <h1>薬剤投与指示 - 内容確認</h1>
+
+  <div class="patient-info">
+    <p><strong>患者ID:</strong> <span id="confirmPatientIdDisplay"></span></p>
+    <p><strong>氏名:</strong> <span id="confirmPatientNameDisplay"></span></p>
+  </div>
+
+  <div class="confirm-orders-section">
+    <h2>以下の内容で投与指示を確定しますか？</h2>
+    <table id="confirmOrdersTable">
+      <thead>
+      <tr>
+        <th>薬剤名</th>
+        <th>数量</th>
+        <th>単位</th>
+      </tr>
+      </thead>
+      <tbody id="confirmOrdersTableBody">
+      <!-- 確認する薬剤がここに表示されます -->
+      </tbody>
+    </table>
+    <p id="noConfirmOrdersMessage" style="text-align:center; color:#6c757d; padding:10px; display:none;">指示内容がありません。</p>
+  </div>
+
+  <div class="main-buttons">
+    <button type="button" class="back-to-edit-btn" onclick="goBackToEdit()">薬剤選択・入力に戻る</button>
+    <button type="button" class="finalize-order-btn" onclick="finalizeOrder()">処置を確定する</button>
+  </div>
+  <p style="margin-top: 30px;"><a href="home.html">« 医師ダッシュボードに戻る</a></p>
+</div>
+</body>
+</html>
